@@ -1,0 +1,34 @@
+import java.util.Arrays;
+class Solution {
+    public int getSecondLargest(int[] arr) {
+        // code here
+        int n=arr.length;
+        int largest=-1,slargest=-1;
+        for(int i=0;i<n;i++){
+            if (arr[i]>largest){
+                largest=arr[i];
+            }
+        }
+        
+        for(int i=0;i<n;i++){
+            if(arr[i]>slargest && arr[i]!=largest) {
+               slargest=arr[i]; 
+            }
+        }
+        return slargest;
+    }
+     public static void main(String args[]){
+        int[] arr={12,35,1,10,34,1};
+        Solution sol=new Solution();
+        
+        System.out.println(sol.getSecondLargest(arr));
+    }
+}
+// class Main{
+    // public static void main(String args[]){
+    //     int[] arr={12,35,1,10,34,1};
+    //     Solution sol=new Solution();
+        
+    //     System.out.println(sol.getSecondLargest(arr));
+    // }
+// }
