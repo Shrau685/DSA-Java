@@ -1,0 +1,49 @@
+import java.util.*;
+
+class Solution {
+    static double knapsack(int W, int profit[], int wt[]) {
+        int n = profit.length;
+        double res = 0.0;
+        
+        // TreeMap with descending order of ratio
+        TreeMap<Double, List<int[]>> tm = new TreeMap<>();
+        
+        for (int i = 0; i < n; i++) {
+            double ratio = (double) profit[i] / wt[i]; // correct ratio
+            
+            // Store items with same ratio in a list
+            tm.putIfAbsent(ratio, new ArrayList<>());
+            tm.get(ratio).add(new int[]{profit[i], wt[i]});
+        }
+
+        // Process items by highest ratio first
+        for (Map.Entry<Double, List<int[]>> entry : tm.descendingMap().entrySet()) {
+            for (int[] item : entry.getValue()) {
+                int p = item[0];
+                int w = item[1];
+                
+                if (w <= W) {
+                    // Take full item
+                    res += p;
+                    W -= w;
+                } else {
+                    // Take fractional item
+                    res += W * entry.getKey(); // ratio * remaining weight
+                    W = 0;
+                    break;
+                }
+            }
+            if (W == 0) break;
+        }
+        return res;
+    }
+
+    public static void main(String args[]) {
+        int W = 20;
+        int[] profit = {120, 100, 60};
+        int[] wt = {17, 13, 8};
+        
+        double res = knapsack(W, profit, wt);
+        System.out.println(res);
+    }
+}
